@@ -1,17 +1,12 @@
 #!name=Talkatone 广告控制
-#!desc=动态拦截 Talkatone 应用内的广告和追踪请求。提供总开关和多种处理策略。
-
-# 整合loon插件
-# 后整理作者：Jason
-
-#！！！！原作者以及整理者！！！
-# 整理作者：https://github.com/LOWERTOP
-# 仓库地址：https://github.com/LOWERTOP/Shadowrocket-First
-# 反馈渠道：https://t.me/ShadowrocketApp
+#!desc=动态拦截 Talkatone 应用内的广告和追踪请求。提供总开关和多种处理策略。导入时，Loon会提示您为“广告代理策略”选择一个您自己的代理策略组（例如 PROXY 或其他节点选择策略）。
+#!author=Expert Analyst
+#!date=2023-10-27
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Talkatone.png
 
 [Argument]
 ad_enabled = switch,true,tag=Talkatone 广告拦截,desc=启用或禁用所有针对 Talkatone 的广告拦截规则。
-ad_policy = select,"REJECT","DIRECT","PROXY",tag=广告请求策略,desc=选择匹配广告规则的请求策略：REJECT (拦截), DIRECT (直连), PROXY (代理)。
+ad_policy = select,"REJECT","DIRECT","广告代理策略",tag=广告请求策略,desc=选择匹配广告规则的请求策略：REJECT (拦截), DIRECT (直连), 广告代理策略 (使用您导入时指定的策略)。
 
 
 # --- Talkatone Ads & Analytics ---
