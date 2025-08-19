@@ -1,0 +1,37 @@
+#!name=Talkatone 广告控制
+#!desc=动态拦截 Talkatone 应用内的广告和追踪请求。提供总开关和多种处理策略。
+
+# 整合loon插件
+# 后整理作者：Jason
+
+#！！！！原作者以及整理者！！！
+# 整理作者：https://github.com/LOWERTOP
+# 仓库地址：https://github.com/LOWERTOP/Shadowrocket-First
+# 反馈渠道：https://t.me/ShadowrocketApp
+
+[Argument]
+ad_enabled = switch,true,tag=Talkatone 广告拦截,desc=启用或禁用所有针对 Talkatone 的广告拦截规则。
+ad_policy = select,"REJECT","DIRECT","PROXY",tag=广告请求策略,desc=选择匹配广告规则的请求策略：REJECT (拦截), DIRECT (直连), PROXY (代理)。
+
+
+# --- Talkatone Ads & Analytics ---
+# 以下规则用于拦截 Talkatone 应用内的广告、分析和追踪域名
+# 每一条规则都通过 policy={ad_policy} 和 enabled={ad_enabled} 与上面的控件联动
+
+# 广告 SDK 和服务
+DOMAIN-SUFFIX, ad.doubleclick.net, policy={ad_policy}, enabled={ad_enabled}
+DOMAIN-SUFFIX, googleads.g.doubleclick.net, policy={ad_policy}, enabled={ad_enabled}
+DOMAIN-SUFFIX, pubads.g.doubleclick.net, policy={ad_policy}, enabled={ad_enabled}
+DOMAIN-SUFFIX, googlesyndication.com, policy={ad_policy}, enabled={ad_enabled}
+DOMAIN-SUFFIX, googletagservices.com, policy={ad_policy}, enabled={ad_enabled}
+DOMAIN-SUFFIX, app-measurement.com, policy={ad_policy}, enabled={ad_enabled}
+
+# 追踪与分析服务
+DOMAIN-SUFFIX, analytics.google.com, policy={ad_policy}, enabled={ad_enabled}
+DOMAIN-SUFFIX, crashlytics.com, policy={ad_policy}, enabled={ad_enabled}
+DOMAIN-SUFFIX, fabric.io, policy={ad_policy}, enabled={ad_enabled}
+DOMAIN-KEYWORD, amplitude, policy={ad_policy}, enabled={ad_enabled}
+
+# Talkatone 自身的广告相关域名 (假设)
+DOMAIN, ads.talkatone.com, policy={ad_policy}, enabled={ad_enabled}
+DOMAIN, analytics.talkatone.io, policy={ad_policy}, enabled={ad_enabled}
