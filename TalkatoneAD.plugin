@@ -1,32 +1,42 @@
-#!name=Talkatone 广告控制
-#!desc=动态拦截 Talkatone 应用内的广告和追踪请求。提供总开关和多种处理策略。导入时，Loon会提示您为“广告代理策略”选择一个您自己的代理策略组（例如 PROXY 或其他节点选择策略）。
+#!name=Talkatone 广告控制 (修正版)
+#!desc=集成Talkatone去广告规则，并提供总开关和自定义策略选择。导入时，Loon会提示您为“广告代理策略”选择一个您自己的代理策略组（例如 PROXY）。
 #!author=Expert Analyst
-#!date=2023-10-27
+#!date=2024-08-19
 #!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Talkatone.png
+#!tag=去广告, Talkatone
 
-[Argument]
-ad_enabled = switch,true,tag=Talkatone 广告拦截,desc=启用或禁用所有针对 Talkatone 的广告拦截规则。
-ad_policy = select,"REJECT","DIRECT","广告代理策略",tag=广告请求策略,desc=选择匹配广告规则的请求策略：REJECT (拦截), DIRECT (直连), 广告代理策略 (使用您导入时指定的策略)。
+# [argument] 部分：为您提供图形化配置界面，实现开关和策略选择功能。
+[argument]
+# 定义一个开关变量 ad_enabled，默认值为 true (开启)
+ad_enabled = switch,true,tag=广告拦截总开关,desc=一键启用或禁用此插件内的所有广告拦截规则。
 
+# 定义一个下拉选择变量 ad_policy，提供三种策略选项
+ad_policy = select,"REJECT","DIRECT","广告代理策略",tag=广告处理策略,desc=选择广告请求的处理方式。选择“广告代理策略”后，需在导入时指定您自己的代理策略组。
 
-# --- Talkatone Ads & Analytics ---
-# 以下规则用于拦截 Talkatone 应用内的广告、分析和追踪域名
-# 每一条规则都通过 policy={ad_policy} 和 enabled={ad_enabled} 与上面的控件联动
+# [rule] 部分：定义所有流量匹配规则。这是之前版本遗漏的关键部分。
+[rule]
+# --- 规则列表开始 ---
+# 以下规则源自您提供的原始列表，并已整合动态控制参数。
+# policy={ad_policy} 会链接到上面的下拉菜单选项。
+# enabled={ad_enabled} 会链接到上面的总开关。
 
-# 广告 SDK 和服务
-DOMAIN-SUFFIX, ad.doubleclick.net, policy={ad_policy}, enabled={ad_enabled}
-DOMAIN-SUFFIX, googleads.g.doubleclick.net, policy={ad_policy}, enabled={ad_enabled}
-DOMAIN-SUFFIX, pubads.g.doubleclick.net, policy={ad_policy}, enabled={ad_enabled}
-DOMAIN-SUFFIX, googlesyndication.com, policy={ad_policy}, enabled={ad_enabled}
-DOMAIN-SUFFIX, googletagservices.com, policy={ad_policy}, enabled={ad_enabled}
-DOMAIN-SUFFIX, app-measurement.com, policy={ad_policy}, enabled={ad_enabled}
-
-# 追踪与分析服务
-DOMAIN-SUFFIX, analytics.google.com, policy={ad_policy}, enabled={ad_enabled}
-DOMAIN-SUFFIX, crashlytics.com, policy={ad_policy}, enabled={ad_enabled}
-DOMAIN-SUFFIX, fabric.io, policy={ad_policy}, enabled={ad_enabled}
-DOMAIN-KEYWORD, amplitude, policy={ad_policy}, enabled={ad_enabled}
-
-# Talkatone 自身的广告相关域名 (假设)
-DOMAIN, ads.talkatone.com, policy={ad_policy}, enabled={ad_enabled}
-DOMAIN, analytics.talkatone.io, policy={ad_policy}, enabled={ad_enabled}
+DOMAIN-SUFFIX,gum.criteo.com,policy={ad_policy},enabled={ad_enabled}
+DOMAIN-SUFFIX,ads.inmobi.com,policy={ad_policy},enabled={ad_enabled}
+DOMAIN-SUFFIX,cdn2.inner-active.mobi,policy={ad_policy},enabled={ad_enabled}
+DOMAIN-SUFFIX,sdk-dnt.ad.smaato.net,policy={ad_policy},enabled={ad_enabled}
+DOMAIN-SUFFIX,sdk-events.inner-active.mobi,policy={ad_policy},enabled={ad_enabled}
+DOMAIN-SUFFIX,ow.pubmatic.com,policy={ad_policy},enabled={ad_enabled}
+DOMAIN-SUFFIX,bidder.criteo.com,policy={ad_policy},enabled={ad_enabled}
+DOMAIN-SUFFIX,googleads.g.doubleclick-cn.net,policy={ad_policy},enabled={ad_enabled}
+DOMAIN-SUFFIX,wv.inner-active.mobi,policy={ad_policy},enabled={ad_enabled}
+DOMAIN-SUFFIX,c.amazon-adsystem.com,policy={ad_policy},enabled={ad_enabled}
+DOMAIN-SUFFIX,cr.adsappier.com,policy={ad_policy},enabled={ad_enabled}
+DOMAIN-SUFFIX,tappx.com,policy={ad_policy},enabled={ad_enabled}
+DOMAIN-SUFFIX,criteo.com,policy={ad_policy},enabled={ad_enabled}
+DOMAIN-SUFFIX,pubmatic.com,policy={ad_policy},enabled={ad_enabled}
+DOMAIN-SUFFIX,smaato.net,policy={ad_policy},enabled={ad_enabled}
+DOMAIN-SUFFIX,amazon-adsystem.com,policy={ad_policy},enabled={ad_enabled}
+DOMAIN-KEYWORD,googleads,policy={ad_policy},enabled={ad_enabled}
+DOMAIN-SUFFIX,adsappier.com,policy={ad_policy},enabled={ad_enabled}
+DOMAIN-SUFFIX,appier.net,policy={ad_policy},enabled={ad_enabled}
+DOMAIN-SUFFIX,appiersig.com,policy={ad_policy},enabled={ad_enabled}
